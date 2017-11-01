@@ -3,10 +3,13 @@ module Refinery
     module Devise
       include ActiveSupport::Configurable
 
-      config_accessor :superuser_can_assign_roles, :email_from_name
+      config_accessor :superuser_can_assign_roles, :email_from_name, :devise_modules_for_user_model
 
       self.superuser_can_assign_roles = false
       self.email_from_name = "no-reply"
+      self.devise_modules_for_user_class = [ :database_authenticatable,
+	      :registerable, :recoverable, :rememberable, :trackable,
+	      :validatable, { authentication_keys: [ :login ] } ]
 
       class << self
         def email_from_name
